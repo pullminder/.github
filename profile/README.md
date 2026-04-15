@@ -10,7 +10,7 @@
 <h3 align="center">A verification layer for AI-assisted pull requests</h3>
 
 <p align="center">
-  Risk scores · Reviewer briefs · Policy enforcement · GitHub-native
+  Risk scores · Reviewer briefs · Policy enforcement · CLI-first analysis · GitHub-native
 </p>
 
 <p align="center">
@@ -27,21 +27,26 @@ AI makes writing code 10x faster — but it makes reviewing code 10x harder. Tea
 
 - **Risk Scoring** — 8 heuristic analyzers evaluate each PR for security flaws, complexity, test coverage gaps, and AI-generated content patterns
 - **Reviewer Briefs** — AI-generated summaries that tell reviewers exactly what to focus on, cutting review time in half
-- **Policy Engine** — Enforce team rules (e.g. "PRs touching auth require security review") with composable YAML policy packs
+- **Policy Engine** — Enforce team rules with composable YAML rule packs from an open registry of 14+ detection and policy packs
+- **CLI-First Analysis** — Run rule packs offline against local diffs or remote PRs from your terminal. SARIF, JUnit, and GitHub annotation output for CI integration
+- **AI Agent Interop** — Every CLI command supports `--agent` for structured JSON output, making Pullminder a tool for Copilot, Claude Code, Cursor, and other AI coding agents
 - **GitHub-Native** — Runs as a GitHub App with Check Runs, PR comments, and status checks. Nothing to install on your machine
 
 ### Works with every AI coding tool
 
 Pullminder analyzes PRs from **GitHub Copilot**, **Cursor**, **Claude Code**, **Windsurf**, and any other tool that opens pull requests.
 
-### Install the CLI
+### Get started
 
 ```bash
-# npm
-npm install -g pullminder
-
-# Homebrew
+# Install the CLI
 brew install pullminder/tap/pullminder
+
+# Initialize your project
+pullminder init
+
+# Analyze your current branch (offline, zero config)
+pullminder check
 ```
 
 ### Use as a GitHub Action
@@ -50,17 +55,13 @@ brew install pullminder/tap/pullminder
 - uses: pullminder/action@v1
 ```
 
-### Open Source
+### Open source
 
 | Repository | Description |
 |---|---|
-| [cli](https://github.com/pullminder/cli) | Pullminder CLI releases |
+| [cli](https://github.com/pullminder/cli) | Cross-platform CLI with 13 commands for local and remote PR analysis |
+| [registry](https://github.com/pullminder/registry) | Official rule pack registry — 14 detection and policy packs |
 | [npm](https://github.com/pullminder/npm) | npm wrapper for the CLI |
-| [homebrew-tap](https://github.com/pullminder/homebrew-tap) | Homebrew tap |
-| [action](https://github.com/pullminder/action) | GitHub Action for registry validation |
-
----
-
-<p align="center">
-  Built by <a href="https://upmate.gr">Upmate</a> in Thessaloniki, Greece
-</p>
+| [homebrew-tap](https://github.com/pullminder/homebrew-tap) | Homebrew tap for macOS/Linux |
+| [action](https://github.com/pullminder/action) | GitHub Action for CI integration |
+| [.github](https://github.com/pullminder/.github) | Org profile and community health files |
