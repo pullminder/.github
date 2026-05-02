@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://pullminder.com"><strong>Website</strong></a> · <a href="https://pullminder.com/docs"><strong>Docs</strong></a> · <a href="https://pullminder.com/trial"><strong>Start Free Trial</strong></a>
+  <a href="https://pullminder.com"><strong>Website</strong></a> · <a href="https://docs.pullminder.com"><strong>Docs</strong></a> · <a href="https://pullminder.com/trial"><strong>Start Free Trial</strong></a>
 </p>
 
 ---
