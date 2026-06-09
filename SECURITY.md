@@ -87,14 +87,29 @@ The following are out of scope:
 
 ## Encrypted disclosure
 
-A dedicated PGP key for `security@pullminder.com` is being provisioned and
-will be published at the standard `/.well-known/pgp/security.asc` location
-on the marketing site, and on the OpenPGP keyserver, once generated. The
-fingerprint will be documented in this section at that time.
+If your report contains sensitive information that should not traverse email
+in plaintext, encrypt it to the PGP key below before sending to
+`security@pullminder.com`.
 
-Until the key is available, please send unencrypted reports via email and we
-will arrange an alternate secure channel (Signal, encrypted file share) on
-request.
+### Key details
+
+- **Fingerprint:** `EDA6 273A 22AE A269 7DAC 5A9D 8396 B06A ED47 3A30`
+- **Type:** Ed25519 (sign/certify) + Curve25519 (encrypt) subkey
+- **Created:** 2026-06-09
+- **Expires:** 2027-06-09 (12-month rotation)
+
+### Download
+
+- [pullminder.com/.well-known/pgp/security.asc](https://pullminder.com/.well-known/pgp/security.asc)
+- [keys.openpgp.org](https://keys.openpgp.org/vks/v1/by-fingerprint/EDA6273A22AEA2697DAC5A9D8396B06AED473A30)
+
+### Import
+
+```bash
+curl -fsSL https://pullminder.com/.well-known/pgp/security.asc | gpg --import
+```
+
+Verify the fingerprint matches the one listed above before encrypting.
 
 ## Recognition
 
