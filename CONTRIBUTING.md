@@ -13,7 +13,7 @@ The repositories in this organization are distribution channels — they wrap an
 
 The [official rule pack registry](https://github.com/pullminder/registry) accepts community pack submissions:
 
-1. Read the [pack authoring guide](https://docs.pullminder.com/registry/authoring).
+1. Read the [pack authoring guide](https://docs.pullminder.com/packs/authoring-guide).
 2. Submit your pack as a pull request to [pullminder/registry](https://github.com/pullminder/registry).
 3. Include a `pack.yaml` and `pack.schema.json` that pass AJV validation.
 
