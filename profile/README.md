@@ -25,7 +25,7 @@ AI makes writing code 10x faster — but it makes reviewing code 10x harder. Tea
 
 ### What Pullminder does
 
-- **Risk Scoring** — 8 heuristic analyzers evaluate each PR for security flaws, complexity, test coverage gaps, and AI-generated content patterns
+- **Risk Scoring** — Heuristic analyzers evaluate each PR for security flaws, complexity, test coverage gaps, and AI-generated content patterns
 - **Reviewer Briefs** — AI-generated summaries that tell reviewers exactly what to focus on, cutting review time in half
 - **Policy Engine** — Enforce team rules with composable YAML rule packs from an open registry of 25 detection and policy packs
 - **CLI-First Analysis** — Run rule packs offline against local diffs or remote PRs from your terminal. SARIF, JUnit, and GitHub annotation output for CI integration
