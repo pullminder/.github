@@ -1,0 +1,58 @@
+# Lychee link-checker configuration for the pullminder/.github org profile.
+#
+# This is a minimal config tailored to profile/README.md and SECURITY.md.
+# The monorepo's .lychee.toml (Upmate/pullminder.com) is the canonical
+# reference for core settings and shared exclusions — keep the two roughly
+# aligned on accept, retry, timeout, and caching values.
+#
+# See https://lychee.cli.rs/configuration/ for the full schema.
+
+# ---------------------------------------------------------------------------
+# Network behaviour
+# ---------------------------------------------------------------------------
+
+# Status codes treated as success.
+#   200, 206 — normal OK / partial-content responses
+#   403       — GitHub Marketplace and shields.io often return 403 unauthenticated
+#   429       — rate-limited; we retry, but a stable run on cron should not fail PRs
+accept = ["200..=206", "403", "429"]
+
+# Only check HTTP(S).
+scheme = ["https", "http"]
+
+# Retry budget for flaky external endpoints.
+max_retries = 3
+retry_wait_time = 2
+timeout = 20
+max_concurrency = 16
+
+# ---------------------------------------------------------------------------
+# Caching
+# ---------------------------------------------------------------------------
+cache = true
+max_cache_age = "1d"
+
+# ---------------------------------------------------------------------------
+# Exclusions
+# ---------------------------------------------------------------------------
+# - localhost / loopback / dev domains are not reachable in CI.
+# - example.com / example.org are intentionally placeholders in code samples.
+# - keys.openpgp.org — PGP key not yet uploaded (tracked by #724 in the
+#   monorepo).
+# - pullminder.com/.well-known/pgp — PGP key file not yet deployed (same #724).
+exclude = [
+    "^https?://localhost",
+    "^https?://127\\.0\\.0\\.1",
+    "^https?://0\\.0\\.0\\.0",
+    "^https?://[^/]+\\.local(?:[/:]|$)",
+    "^https?://[^/]+\\.test(?:[/:]|$)",
+    "^https?://example\\.com",
+    "^https?://example\\.org",
+    "^https://keys\\.openpgp\\.org/",
+    "^https://pullminder\\.com/\\.well-known/pgp",
+]
+
+# mailto: verification is disabled. Lychee performs RCPT-TO probes which
+# are unreliable across MX configurations (Google Workspace, iCloud, custom
+# postfix) and produced false positives for security@pullminder.com.
+include_mail = false

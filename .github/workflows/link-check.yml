@@ -1,0 +1,90 @@
+name: link-check
+
+# Runs lychee against the org profile documentation surfaces:
+#   - PR runs are scoped to paths that contain prose links.
+#   - Weekly cron catches link rot on external URLs (GitHub repos,
+#     pullminder.com, docs site). On cron failure we open a tracking
+#     issue instead of pinging every PR author.
+
+on:
+  pull_request:
+    paths:
+      - "profile/README.md"
+      - "SECURITY.md"
+      - ".lychee.toml"
+      - ".github/workflows/link-check.yml"
+  schedule:
+    # Mondays 06:00 UTC — quiet window, matching the monorepo's cadence.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    name: lychee link-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Restore lychee cache
+        uses: actions/cache@v5
+        with:
+          path: .lycheecache
+          key: lychee-cache-${{ github.run_id }}
+          restore-keys: lychee-cache-
+
+      - name: Run lychee
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --config .lychee.toml
+            --no-progress
+            --cache
+            --max-cache-age 1d
+            --root-dir ${{ github.workspace }}
+            './profile/README.md'
+            './SECURITY.md'
+          fail: ${{ github.event_name == 'pull_request' }}
+          format: markdown
+          output: ./lychee/out.md
+          jobSummary: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # On cron failures we don't fail the workflow (no PR to gate).
+      # Instead we open a tracking issue with the latest report so link
+      # rot doesn't accumulate silently.
+      #
+      # CROSS_REPO_TOKEN (optional): a fine-grained PAT or classic token
+      # with `issues: write` on Upmate/pullminder.com. When set, the
+      # tracking issue is filed in the monorepo where the triage workflow
+      # lives. When absent, the issue is created in this repository as a
+      # fallback.
+      - name: Open or update link-rot tracking issue
+        if: >-
+          github.event_name == 'schedule' &&
+          steps.lychee.outputs.exit_code != '0'
+        env:
+          CROSS_REPO_TOKEN: ${{ secrets.CROSS_REPO_TOKEN }}
+        run: |
+          if [ -n "$CROSS_REPO_TOKEN" ]; then
+            REPO="Upmate/pullminder.com"
+            export GH_TOKEN="$CROSS_REPO_TOKEN"
+            echo "→ Filing tracking issue in $REPO (cross-repo)"
+          else
+            REPO="${{ github.repository }}"
+            echo "→ CROSS_REPO_TOKEN not set — filing tracking issue in $REPO (fallback)"
+          fi
+          gh issue create \
+            --repo "$REPO" \
+            --title "docs: link-rot in pullminder/.github" \
+            --body-file ./lychee/out.md \
+            --label documentation,chore || true
