@@ -55,10 +55,10 @@ We provide security updates for the latest release of each package.
 |---|---|
 | CLI (latest) | Yes |
 | GitHub Action (v1) | Yes |
-| Web application (`pullminder.com`, `app.pullminder.com`) | Yes |
-| Marketing site (`pullminder.com`) | Yes |
-| Documentation (`docs.pullminder.com`) | Yes |
-| API (`api.pullminder.com`) | Yes |
+| Web application | Yes |
+| Marketing site | Yes |
+| Documentation | Yes |
+| API | Yes |
 
 ## Scope
 
@@ -66,15 +66,12 @@ The following are in scope for security reports:
 
 - The Pullminder CLI (`@pullminder/cli` on npm and the `pullminder` Homebrew
   formula).
-- The Pullminder GitHub Action (`Upmate/action`).
-- The Pullminder web application served from `pullminder.com` and
-  `app.pullminder.com`.
-- The marketing site, including any pages under `pullminder.com` and
-  `*.pullminder.com`.
-- The documentation site at `docs.pullminder.com`.
-- The Pullminder API at `api.pullminder.com`.
-- Public source repositories under the `Upmate` and `pullminder` GitHub
-  organisations.
+- The Pullminder GitHub Action (available on the GitHub Marketplace).
+- The Pullminder web application (dashboard).
+- The marketing site and all of its pages.
+- The documentation site.
+- The Pullminder API.
+- Public source repositories under the `pullminder` GitHub organisation.
 
 The following are out of scope:
 
