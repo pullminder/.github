@@ -63,25 +63,24 @@ jobs:
       # Instead we open a tracking issue with the latest report so link
       # rot doesn't accumulate silently.
       #
-      # CROSS_REPO_TOKEN (optional): a fine-grained PAT or classic token
-      # with `issues: write` on Upmate/pullminder.com. When set, the
-      # tracking issue is filed in the monorepo where the triage workflow
-      # lives. When absent, the issue is created in this repository as a
-      # fallback.
+      # A cross-repo token (optional): a fine-grained PAT or classic token
+      # with `issues: write` on the tracking repository. When set, the
+      # tracking issue is filed there instead of in this repository.
       - name: Open or update link-rot tracking issue
         if: >-
           github.event_name == 'schedule' &&
           steps.lychee.outputs.exit_code != '0'
         env:
           CROSS_REPO_TOKEN: ${{ secrets.CROSS_REPO_TOKEN }}
+          TRACKING_REPO: ${{ vars.TRACKING_REPO || github.repository }}
         run: |
           if [ -n "$CROSS_REPO_TOKEN" ]; then
-            REPO="Upmate/pullminder.com"
+            REPO="$TRACKING_REPO"
             export GH_TOKEN="$CROSS_REPO_TOKEN"
             echo "→ Filing tracking issue in $REPO (cross-repo)"
           else
             REPO="${{ github.repository }}"
-            echo "→ CROSS_REPO_TOKEN not set — filing tracking issue in $REPO (fallback)"
+            echo "→ Cross-repo token not set — filing tracking issue in $REPO (fallback)"
           fi
           gh issue create \
             --repo "$REPO" \
