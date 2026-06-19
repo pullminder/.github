@@ -66,15 +66,14 @@ The following are in scope for security reports:
 
 - The Pullminder CLI (`@pullminder/cli` on npm and the `pullminder` Homebrew
   formula).
-- The Pullminder GitHub Action (`Upmate/action`).
+- The Pullminder GitHub Action (available on the GitHub Marketplace).
 - The Pullminder web application served from `pullminder.com` and
   `app.pullminder.com`.
 - The marketing site, including any pages under `pullminder.com` and
   `*.pullminder.com`.
 - The documentation site at `docs.pullminder.com`.
 - The Pullminder API at `api.pullminder.com`.
-- Public source repositories under the `Upmate` and `pullminder` GitHub
-  organisations.
+- Public source repositories under the `pullminder` GitHub organisation.
 
 The following are out of scope:
 
